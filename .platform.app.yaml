@@ -1,0 +1,15 @@
+web:
+  commands:
+    parse_news:
+      spec: '50 23 * * *'
+      cmd: |
+        if [ "$PLATFORM_BRANCH" = "master" ]; then
+          croncape symfony console app:news:crawl
+        fi
+
+runtime:
+  extensions:
+    - amqp
+
+relationships:
+  rabbitmq: "queue:rabbitmq"
